@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+    <link rel="stylesheet" href="player.css" />
+    <title>Player</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Player Experimentation</h1>
+      <div class="player-container">
+        <div class="player-overlay" style="display: none">
+          <h1 class="player-video-title">Video Title</h1>
+          <div class="player-button-layout">
+            <div class="time-labels">
+                <div></div>
+              <div><span id="currentTime">0:00</span> /
+                <span id="duration">0:00</span></div>
+            </div>
+            <input
+              type="range"
+              name="player-scrub-slider"
+              class="player-scrub-slider"
+              id="player-scrub-slider"
+              onchange="updateTime()"
+              max="1"
+              min="0"
+              value="0"
+            />
+            <div class="play-pause-controls overlapping-btn">
+              <button class="playBtn player-btn" onclick="togglePlayPause()">
+                <span class="material-symbols-outlined">play_arrow</span>
+              </button>
+              <button
+                class="pauseBtn player-btn"
+                onclick="togglePlayPause()"
+                style="display: none"
+              >
+                <span class="material-symbols-outlined">pause</span>
+              </button>
+            </div>
+            <button class="previousBtn player-btn" onclick="loadPreviousVideo()">
+              <span class="material-symbols-outlined">skip_previous</span>
+            </button>
+            <button class="nextBtn player-btn" onclick="loadNextVideo()">
+              <span class="material-symbols-outlined">skip_next</span>
+            </button>
+            <div class="overlapping-btn">
+              <button class="soundBtn player-btn" onclick="toggleVolume()">
+                <span class="material-symbols-outlined">volume_up</span>
+              </button>
+              <button
+                class="muteBtn player-btn"
+                onclick="toggleVolume()"
+                style="display: none"
+              >
+                <span class="material-symbols-outlined">volume_off</span>
+              </button>
+              <input
+                type="range"
+                name="player-volume-slider"
+                class="player-volume-slider"
+                id="player-volume-slider"
+                onchange="updateVolume()"
+                max="1"
+                min="0"
+                value="1"
+                step="0.01"
+              />
+            </div>
+            <div class="fullscreen-controls overlapping-btn">
+              <button
+                class="fullscreenBtn player-btn"
+                onclick="toggleFullscreen()"
+              >
+                <span class="material-symbols-outlined">fullscreen</span>
+              </button>
+              <button
+                class="fullscreenCloseBtn player-btn"
+                onclick="toggleFullscreen()"
+                style="display: none"
+              >
+                <span class="material-symbols-outlined">fullscreen_exit</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <video
+          class="player-main"
+          id="player-main"
+          width="100%"
+          poster="video-thumbnail.jpg"
+        >
+          <!-- The 'controls' attribute adds video controls (play, pause, volume, etc.) -->
+          <!-- The 'autoplay' attribute automatically starts playing the video when the page loads -->
+          <!-- The 'loop' attribute makes the video loop continuously -->
+          <!-- The 'muted' attribute mutes the audio by default -->
+          <source src="video.mp4" type="video/mp4" />
+          Sorry but, your browser cannot play this media.
+        </video>
+        <div class="video-hd">
+          <span class="material-symbols-outlined">hd</span>
+        </div>
+      </div>
+    </div>
+    <script src="player-controls.js"></script>
+  </body>
+</html>
