@@ -95,7 +95,6 @@ video.addEventListener("loadedmetadata", function () {
 video.addEventListener("timeupdate", function () {
   playerTimeSlider.value = video.currentTime;
   currentTimeLabel.textContent = formatTime(video.currentTime);
-  //   console.log(video.duration);
 });
 
 // JavaScript function to update video time
@@ -141,7 +140,7 @@ function loadNextVideo() {
   let currentVideoIndex = localStorage.getItem("videoIndex");
   if (
     currentVideoIndex == undefined ||
-    currentVideoIndex > videoList.length - 1
+    currentVideoIndex >= (videoList.length - 1)
   ) {
     currentVideoIndex = 0;
     loadingProcess(currentVideoIndex);
@@ -162,83 +161,57 @@ function loadPreviousVideo() {
   }
 }
 
-var videoQualityIcons = [
-    {
-      quality: "SD",
-      icon: `<span class="material-symbols-outlined">sd</span>`,
-    },
-    {
-        quality: "HD",
-        icon: `<span class='material-symbols-outlined'>hd</span>`,
-      },
-      {
-        quality: "FHD",
-        icon: `<span class='material-symbols-outlined'>full_hd</span>`,
-      },
-      {
-        quality: "HD+",
-        icon: `<span class="material-symbols-outlined">high_res</span>`,
-      },
-      {
-        quality: "4K",
-        icon: `<span class='material-symbols-outlined'>4k</span>`,
-      },
-      {
-        quality: "4K+",
-        icon: `<span class="material-symbols-outlined">4k_plus</span>`,
-      },
-      {
-        quality: "8K",
-        icon: `<span class="material-symbols-outlined">8k</span>`,
-      },
-      {
-        quality: "8K+",
-        icon: `<span class="material-symbols-outlined">8k_plus</span>`,
-      },
-  ];
 
-  function setQuality(){
-    videoQualityIndicator.innerHTML = "";
-    console.log("video : " + video.videoHeight);
-    if(video.videoHeight < 720){
-        videoQualityIndicator.innerHTML = searchQuality("SD");
-    }
-    else if(video.videoHeight >= 720 && video.videoHeight < 1080){
-        videoQualityIndicator.innerHTML = searchQuality("HD");
-    }
-    else if(video.videoHeight == 1080){
-        videoQualityIndicator.innerHTML = searchQuality("FHD");
-    }
-    else if(video.videoHeight > 1080 && video.videoHeight < 2160){
-        videoQualityIndicator.innerHTML = searchQuality("HD+");
-    }
-    else if(video.videoHeight == 2160){
-        videoQualityIndicator.innerHTML = searchQuality("4K");
-    }
-    else if(video.videoHeight > 2160 && video.videoHeight < 4320){
-        videoQualityIndicator.innerHTML = searchQuality("4K+");
-    }
-    else if(video.videoHeight == 4320){
-        videoQualityIndicator.innerHTML = searchQuality("8K");
-    }
-    else if(video.videoHeight > 4320){
-        videoQualityIndicator.innerHTML = searchQuality("8K+");
-    }
+function setQuality() {
+  videoQualityIndicator.innerHTML = "";
+  if (video.videoHeight < 720) {
+    videoQualityIndicator.insertAdjacentHTML(
+      "beforeend",
+      '<span class="material-symbols-outlined">sd</span>'
+    );
+  } else if (video.videoHeight >= 720 && video.videoHeight < 1080) {
+    videoQualityIndicator.insertAdjacentHTML(
+      "beforeend",
+      '<span class="material-symbols-outlined">hd</span>'
+    );
+  } else if (video.videoHeight == 1080) {
+    videoQualityIndicator.insertAdjacentHTML(
+      "beforeend",
+      '<span class="material-symbols-outlined">full_hd</span>'
+    );
+  } else if (video.videoHeight > 1080 && video.videoHeight < 2160) {
+    videoQualityIndicator.insertAdjacentHTML(
+      "beforeend",
+      '<span class="material-symbols-outlined">high_res</span>'
+    );
+  } else if (video.videoHeight == 2160) {
+    videoQualityIndicator.insertAdjacentHTML(
+      "beforeend",
+      '<span class="material-symbols-outlined">4k</span>'
+    );
+  } else if (video.videoHeight > 2160 && video.videoHeight < 4320) {
+    videoQualityIndicator.insertAdjacentHTML(
+      "beforeend",
+      '<span class="material-symbols-outlined">4k_plus</span>'
+    );
+  } else if (video.videoHeight == 4320) {
+    videoQualityIndicator.insertAdjacentHTML(
+      "beforeend",
+      '<span class="material-symbols-outlined">8k</span>'
+    );
+  } else if (video.videoHeight > 4320) {
+    videoQualityIndicator.insertAdjacentHTML(
+      "beforeend",
+      '<span class="material-symbols-outlined">8k_plus</span>'
+    );
   }
+}
 
- function searchQuality(abbreviation){
-    videoQualityIcons.forEach(resolution => {
-        if (resolution.quality == abbreviation) {
-            console.log(resolution.icon);
-            return resolution.icon;
-        }
-    });
- };
-
- function loadingProcess(currentVideoIndex) {
-    video.src = videoList[currentVideoIndex].location;
-    video.load();
-    video.play();
-    videoTitle.textContent = videoList[currentVideoIndex].title;
-    setQuality();
- }
+function loadingProcess(currentVideoIndex) {
+  video.src = videoList[currentVideoIndex].location;
+  video.load();
+  video.play();
+  videoTitle.textContent = videoList[currentVideoIndex].title;
+  localStorage.setItem("videoIndex",currentVideoIndex);
+  setQuality();
+}
